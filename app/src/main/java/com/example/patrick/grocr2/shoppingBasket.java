@@ -46,43 +46,43 @@ public class shoppingBasket extends AppCompatActivity {
 
         //get array of object items
 
-//        JSONArray productsList = (JSONArray) findViewById(R.id.productsList);
-//
-//        String name = "";
-//        Double price = 0.0;
-//
-//        ArrayList<String> listItems=new ArrayList<String>();
-//
-//        for (int i = 0; i < productsList.length(); i++) {
-//
-//            JSONObject row = null;
-//            try {
-//                row = productsList.getJSONObject(i);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            try {
-//                name = row.getString("name");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                price = row.getDouble("price");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            listItems.add(i,name + " "+" "+ price);
-//            num = num + 1;
-//            prices = prices + price;
-//        }
+       /* JSONArray productsList = (JSONArray) findViewById(R.id.productsList);
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, listItems);
-//        ListView listview;
-//        listview = (ListView) findViewById(R.id.orderList);
-//        listview.setAdapter(adapter);
+        String name = "";
+        Double price = 0.0;
 
-//        numOfItems.setText(num);
-//        totalPrice.setText(String.valueOf(prices));
+        ArrayList<String> listItems=new ArrayList<String>();
+
+        for (int i = 0; i < productsList.length(); i++) {
+
+            JSONObject row = null;
+            try {
+                row = productsList.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                name = row.getString("name");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                price = row.getDouble("price");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            listItems.add(i,name + " "+" "+ price);
+            num = num + 1;
+            prices = prices + price;
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, listItems);
+        ListView listview;
+        listview = (ListView) findViewById(R.id.orderList);
+        listview.setAdapter(adapter);
+
+        numOfItems.setText(num);
+        totalPrice.setText(String.valueOf(prices));*/
     }
 }

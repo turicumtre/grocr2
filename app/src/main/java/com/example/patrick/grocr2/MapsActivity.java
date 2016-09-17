@@ -105,7 +105,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(orders.get(i).longi,  orders.get(i).lati))
-                        .title(orders.get(i).pk.size() + " Products"));
+                        .title(orders.get(i).pk.size() + " Products, delivery time: "+orders.get(i).deliverytime));
 
                 marker.setTag(orders.get(i).id);
             }
