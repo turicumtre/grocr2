@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<<<<<<< HEAD
+=======
 
+>>>>>>> e3583979543733e5b794045d62668682750bc90d
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
