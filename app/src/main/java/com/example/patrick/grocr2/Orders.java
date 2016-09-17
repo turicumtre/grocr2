@@ -5,9 +5,6 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by philipp on 17.09.16.
- */
 public class Orders implements Serializable {
     double longi,lati;
     String deliverytime;
