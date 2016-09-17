@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.patrick.grocr2.shoppingBasket">
-    <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -180,5 +178,4 @@
         android:textSize="16sp"
         android:layout_alignBottom="@+id/totalPrice"
         android:layout_toEndOf="@+id/totalPrice" />
-
 </RelativeLayout>
