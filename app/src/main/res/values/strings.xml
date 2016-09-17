@@ -2,4 +2,5 @@
     <string name="app_name">grocr</string>
     <string name="login">Sign in</string>
     <string name="title_activity_product_browser">ProductBrowser</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

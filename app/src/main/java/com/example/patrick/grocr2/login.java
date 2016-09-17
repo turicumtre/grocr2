@@ -50,7 +50,7 @@ public class login extends AppCompatActivity {
     }
 
 
-    protected void tryLogin extends AsyncTask<Void (String email, String password)
+    protected void tryLogin (String email, String password)
     {
         HttpURLConnection connection;
         OutputStreamWriter request = null;
