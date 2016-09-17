@@ -42,5 +42,20 @@ public class ProductBrowser extends AppCompatActivity {
 
         for (String EAN : Arrays.asList(Product.example_EAN))
             products.add(new Product(EAN));
+
+        //toolbar with back button
+        getSupportActionBar().setTitle(R.string.shopping_basket_title);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
     }
 }
