@@ -217,7 +217,10 @@ public class ShoppingList extends Activity implements OnScanListener {
     protected void onPause() {
         // When the activity is in the background immediately stop the
         // scanning to save resources and free the camera.
-        mBarcodePicker.stopScanning();
+        if (mBarcodePicker != null) {
+            mBarcodePicker.stopScanning();
+        }
+
         mPaused = true;
         super.onPause();
     }
@@ -239,8 +242,9 @@ public class ShoppingList extends Activity implements OnScanListener {
     @Override
     public void onBackPressed() {
 
-        mBarcodePicker.stopScanning();
-
+        if (mBarcodePicker != null) {
+            mBarcodePicker.stopScanning();
+        }
         if (scanner.getVisibility() == View.VISIBLE){
             scanner.setVisibility(View.GONE);
         }else {
