@@ -59,10 +59,10 @@
         android:maxWidth="230dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginBottom="240dp"
         android:nestedScrollingEnabled="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/textView10" />
 
     <TextView
         android:layout_width="wrap_content"
