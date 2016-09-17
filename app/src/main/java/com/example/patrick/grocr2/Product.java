@@ -14,7 +14,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by Patrick on 17.09.2016.
  */
 public class Product {
-    public final static String[] example_EAN = new String[] {"9002975301268", "7610469295645", "2050000719073","5937","2050000771606","7640146943200","7614400005829","7640146944993", "7640146945020","76§0"};
+    public final static String[] example_EAN = new String[] {"9002975301268", "7610469295645", "2050000719073","5937","2050000771606","7640146943200","7614400005829","7640146944993", "7640146945020"};
 
     public String name;
 

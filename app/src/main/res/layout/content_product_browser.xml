@@ -12,10 +12,17 @@
     tools:context="com.example.patrick.grocr2.ProductBrowser"
     tools:showIn="@layout/activity_product_browser">
 
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:id="@+id/editText5"
+        android:layout_alignParentTop="true"
+         />
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/editText5"
         android:layout_alignParentStart="true"
         android:id="@+id/productTableLayout">
 
@@ -28,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
+                android:text="Produkt"
                 android:id="@+id/product1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
+                android:text="Preis"
                 android:id="@+id/price1" />
         </TableRow>
 
@@ -43,10 +50,11 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
+        android:layout_height="40dp"
+        android:text="Go"
         android:id="@+id/searchb"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@+id/editText5"
         android:onClick="" />
+
+
 </RelativeLayout>

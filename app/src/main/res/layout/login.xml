@@ -33,6 +33,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="61dp"
         android:backgroundTint="@color/colorPrimaryDark"/>
+        android:layout_marginTop="61dp"
+        android:text="a" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -45,6 +47,8 @@
         android:layout_below="@+id/email"
         android:layout_alignStart="@+id/email"
         android:backgroundTint="@color/colorPrimaryDark"/>
+        android:layout_alignStart="@+id/email"
+        android:text="a" />
 
     <Button
         android:layout_width="wrap_content"
