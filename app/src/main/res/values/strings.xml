@@ -4,4 +4,5 @@
     <string name="title_activity_product_browser">ProductBrowser</string>
     <string name="title_activity_maps">Map</string>
     <string name="shopping_basket_title">Shopping Basket</string>
+    <string name="title_shopping_basket">Shopping Basket</string>
 </resources>

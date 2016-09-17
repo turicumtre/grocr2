@@ -53,6 +53,9 @@
             android:name=".MapsActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_maps"></activity>
+        <activity
+            android:name=".shoppingBasket"
+            android:label="@string/title_shopping_basket"></activity>
     </application>
 
 </manifest>
