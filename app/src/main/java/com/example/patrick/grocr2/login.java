@@ -69,18 +69,19 @@ public class login extends AppCompatActivity {
             for (int i = 0; i < profiles.size(); i++){
                 if(email.getText().toString() == profiles.get(i).email && password.getText().toString() == profiles.get(i).password){
 
+                    String message = Integer.toString(profiles.get(i).id);
+
+                    Log.v("asdf",message);
+                    Intent intent = new Intent(login.this, MainActivity.class);
+                    intent.putExtra("message", message);
+                    startActivity(intent);
                 }
 
             }
         }
     }
 
-    <<<<<<< HEAD
-    protected void tryLogin()
-    =======
-
-    protected void tryLogin (String email, String password)
-    >>>>>>> 5a11ecdccdb49ad77dde28677b3609da72db8cc7
+    protected void tryLogin ()
     {
         HttpURLConnection connection;
         OutputStreamWriter request = null;
