@@ -62,7 +62,6 @@ public class ProductBrowser extends AppCompatActivity {
         final EditText searchbar = (EditText) findViewById(R.id.searchbar);
 
         App globalApp = (App) getApplicationContext();
-        Log.i("fudi","juhuuu: " + globalApp.test);
 
         setSupportActionBar(toolbar);
 
@@ -129,29 +128,19 @@ public class ProductBrowser extends AppCompatActivity {
         }
     }
 
-    public String serializeOrder(){
-        String serializedObject = "";
-
-        try {
-            ByteArrayOutputStream bo = new ByteArrayOutputStream();
-            ObjectOutputStream so = new ObjectOutputStream(bo);
-            so.writeObject(order);
-            so.flush();
-            serializedObject = bo.toString();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return serializedObject;
-    }
-
-
     public void sendOrderToServer() {
 
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
-        double longi = 47;
-        double lati = 8.374;
+        double offset1 = Math.random()/100;
+        double offset2 = Math.random()/100;
+        if(Math.random()>0.5)
+            offset1=-offset1;
+        if(Math.random()>0.5)
+            offset2=-offset2;
+        double longi = 47.3802+offset1;
+        double lati = 8.5404+offset2;
         String deliverytime = "16:30";
         boolean refugee = true;
         int accepted = 0;
@@ -170,8 +159,6 @@ public class ProductBrowser extends AppCompatActivity {
         order = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk);
     new Async().execute();
     }
-
-
     class Async extends AsyncTask<Void, Integer, String>
     {
         @Override
@@ -240,53 +227,6 @@ public class ProductBrowser extends AppCompatActivity {
 
 
     }
-
-//    private class MyLocationListener implements LocationListener {
-//
-//        @Override
-//        public void onLocationChanged(Location loc) {
-//            editLocation.setText("");
-//            pb.setVisibility(View.INVISIBLE);
-//            Toast.makeText(
-//                    getBaseContext(),
-//                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-//                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
-//            String longitude = "Longitude: " + loc.getLongitude();
-//            Log.v(TAG, longitude);
-//            String latitude = "Latitude: " + loc.getLatitude();
-//            Log.v(TAG, latitude);
-//
-//        /*------- To get city name from coordinates -------- */
-//            String cityName = null;
-//            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-//            List<Address> addresses;
-//            try {
-//                addresses = gcd.getFromLocation(loc.getLatitude(),
-//                        loc.getLongitude(), 1);
-//                if (addresses.size() > 0) {
-//                    System.out.println(addresses.get(0).getLocality());
-//                    cityName = addresses.get(0).getLocality();
-//                }
-//            }
-//            catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-//                    + cityName;
-//            editLocation.setText(s);
-//        }
-
-//
-//
-//        @Override
-//        public void onProviderDisabled(String provider) {}
-//
-//        @Override
-//        public void onProviderEnabled(String provider) {}
-//
-//        @Override
-//        public void onStatusChanged(String provider, int status, Bundle extras) {}
-//    }
 
     public void createProduct(final String EAN)
     {
