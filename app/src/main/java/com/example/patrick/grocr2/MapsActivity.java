@@ -153,7 +153,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             String cdeliverytime;
             int cposttime,caccepted,cid,caccount,crefugeeint;
             boolean crefugee=false;
-            ArrayList<Integer> cpk = new ArrayList<>();
+            ArrayList<Float> cpk = new ArrayList<>();
 
             JSONArray array = new JSONArray(response);
 
@@ -177,16 +177,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                //add all products
-                cpk.add(row.getInt("pk1"));
-                cpk.add(row.getInt("pk2"));
-                cpk.add(row.getInt("pk3"));
-                cpk.add(row.getInt("pk4"));
-                cpk.add(row.getInt("pk5"));
-                cpk.add(row.getInt("pk6"));
-                cpk.add(row.getInt("pk7"));
-                cpk.add(row.getInt("pk8"));
-                cpk.add(row.getInt("pk9"));
-                cpk.add(row.getInt("pk10"));
+                cpk.add((float)row.getInt("pk1"));
+                cpk.add((float)row.getInt("pk2"));
+                cpk.add((float)row.getInt("pk3"));
+                cpk.add((float)row.getInt("pk4"));
+                cpk.add((float)row.getInt("pk5"));
+                cpk.add((float)row.getInt("pk6"));
+                cpk.add((float)row.getInt("pk7"));
+                cpk.add((float)row.getInt("pk8"));
+                cpk.add((float)row.getInt("pk9"));
+                cpk.add((float)row.getInt("pk10"));
 
 
                 Log.v("Entire",String.valueOf(cpk));
@@ -201,8 +201,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     crefugee = true;
                 }
 
-                ArrayList<Integer> dummy = new ArrayList<>();
-                dummy = (ArrayList<Integer>)cpk.clone();
+                ArrayList<Float> dummy = new ArrayList<>();
+                dummy = (ArrayList<Float>)cpk.clone();
                 Orders currentOrder = new Orders(clongi,clati,cdeliverytime,crefugee,caccepted,cid,caccount,dummy);
                 orders.add(currentOrder);
                 cpk.clear();

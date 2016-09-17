@@ -150,8 +150,8 @@ public class ShoppingList extends AppCompatActivity {
                     crefugee = true;
                 }
 
-                ArrayList<Integer> dummy = new ArrayList<>();
-                dummy = (ArrayList<Integer>)cpk.clone();
+                ArrayList<Float> dummy = new ArrayList<>();
+                dummy = (ArrayList<Float>)cpk.clone();
                 Orders currentOrder = new Orders(clongi,clati,cdeliverytime,crefugee,caccepted,cid,caccount,dummy);
                 orders.add(currentOrder);
                 cpk.clear();
