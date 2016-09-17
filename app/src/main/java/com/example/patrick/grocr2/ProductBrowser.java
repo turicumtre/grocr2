@@ -1,6 +1,7 @@
 package com.example.patrick.grocr2;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ public class ProductBrowser extends AppCompatActivity {
     String[] example_EAN;
     TableLayout tableLayout;
     Set<Product> currentSearchResult = new HashSet<>();
+    Set<Product> chosenProducts = new HashSet<>();
+    Map<View, Product> viewToProduct = new HashMap<>();
     Button button;
     Orders order;
     Map<String, Product> nameToProduct= new HashMap<>();
@@ -57,6 +60,9 @@ public class ProductBrowser extends AppCompatActivity {
         setContentView(R.layout.activity_product_browser);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         final EditText searchbar = (EditText) findViewById(R.id.searchbar);
+
+        App globalApp = (App) getApplicationContext();
+        Log.i("fudi","juhuuu: " + globalApp.test);
 
         setSupportActionBar(toolbar);
 
@@ -95,15 +101,32 @@ public class ProductBrowser extends AppCompatActivity {
         tableLayout.removeAllViews();
         for (Product p:currentSearchResult){
             TableRow row = new TableRow(this);
-            TextView name = new TextView(this);
+            Button name = new Button(this);
             TextView price = new TextView(this);
             name.setText(p.name);
-            price.setText(Double.toString(p.price));
+            price.setText("  Fr. " + Double.toString(p.price));
             row.addView(name);
             row.addView(price);
             tableLayout.addView(row);
+            viewToProduct.put(name, p);
+            if(chosenProducts.contains(viewToProduct.get(name)))
+                name.setBackgroundColor(Color.LTGRAY);
+            else
+                name.setBackgroundColor(Color.WHITE);
+            name.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v)
+                {
+                    if(!chosenProducts.contains(viewToProduct.get(v))){
+                        v.setBackgroundColor(Color.LTGRAY);
+                        chosenProducts.add(viewToProduct.get(v));
+                    }
+                    else {
+                    v.setBackgroundColor(Color.WHITE);
+                    chosenProducts.remove(viewToProduct.get(v));
+                }
+                }
+            });
         }
-    sendOrderToServer(); //Todo löschen
     }
 
     public String serializeOrder(){
