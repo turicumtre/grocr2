@@ -41,4 +41,12 @@
         android:layout_marginBottom="52dp"
         android:textSize="34dp"
         android:background="@color/white"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="shoppin basket"
+        android:id="@+id/shoppingBasketButton"
+        android:layout_above="@+id/logoutButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

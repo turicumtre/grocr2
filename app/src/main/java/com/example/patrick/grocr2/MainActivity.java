@@ -64,5 +64,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        Button shoppingBasketButton = (Button) findViewById(R.id.shoppingBasketButton);
+        shoppingBasketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, shoppingBasket.class);
+                startActivity(myIntent);
+            }
+        });
     }
 }
