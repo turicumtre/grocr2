@@ -37,42 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-
-        getRequest();
     }
 
-    private void getRequest() {
-        final AsyncHttpClient client = new AsyncHttpClient();
-        client.setBasicAuth("HackZurich","mKw%VY<7.Yb8D!G-");
-//        client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean=9002975301268&format=json&retail_store_id=18406", new AsyncHttpResponseHandler() {
-        client.get("https://backend.scango.ch/api/v01/items/", new AsyncHttpResponseHandler() {
-            @Override
-            public void onStart() {
-                // called before request is started
-            }
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.i("Fudi","Sucess " + responseBody.toString());
-                String res = new String(responseBody);
-                Log.i("fudi",res);
-                try {
-                    JSONObject jsonobject = new JSONObject(res);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.i("Fudi","Failure " + error.toString());
-            }
-
-            @Override
-            public void onRetry(int retryNo) {
-                // called when request is retried
-            }
-        });
-
-    }
 }
