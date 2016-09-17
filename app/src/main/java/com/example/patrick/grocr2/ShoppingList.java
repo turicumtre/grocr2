@@ -1,21 +1,11 @@
 package com.example.patrick.grocr2;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -32,56 +22,26 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,GoogleMap.OnInfoWindowClickListener {
-
-    private GoogleMap mMap;
+public class ShoppingList extends AppCompatActivity {
 
     ArrayList<Orders> orders = new ArrayList<Orders>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_shopping_list);
 
-        setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        Bundle bundle = getIntent().getExtras();
+        int userId = bundle.getInt("message");
 
 
+        Toast.makeText(this, userId +" window clicked",
+                Toast.LENGTH_SHORT).show();
+
+        new AsyncShopping().execute();
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(47.376887,8.541694) , 14.0f) );
-
-        new AsyncMap().execute();
-        mMap.setOnInfoWindowClickListener(this);
-    }
-
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-       String title = marker.getTitle();
-        int tag = (int) marker.getTag();
-
-        Intent intent = new Intent(MapsActivity.this, ShoppingList.class);
-        intent.putExtra("message", tag);
-        startActivity(intent);
-    }
-
-    class AsyncMap extends AsyncTask<Void, Integer, String>
+    class AsyncShopping extends AsyncTask<Void, Integer, String>
     {
         @Override
         protected void onPreExecute() {
@@ -98,18 +58,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-
-            for (int i = 0; i < orders.size(); i++){
-
-                Log.v("pk",String.valueOf(orders.get(i).pk));
-
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(orders.get(i).longi,  orders.get(i).lati))
-                        .title(orders.get(i).pk.size() + " Products"));
-
-                marker.setTag(orders.get(i).id);
-            }
-
+            //POPULATE TABLE HERE (?)
         }
     }
 
@@ -176,7 +125,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 caccount = row.getInt("account");
 
 
-               //add all products
+                //add all products
                 cpk.add(row.getInt("pk1"));
                 cpk.add(row.getInt("pk2"));
                 cpk.add(row.getInt("pk3"));

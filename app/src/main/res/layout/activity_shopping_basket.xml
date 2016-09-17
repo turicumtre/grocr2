@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.patrick.grocr2.shoppingBasket">
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order"
+        android:id="@+id/orderButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="34dp"
+        android:layout_above="@+id/orderButton"
+        android:layout_toStartOf="@+id/orderButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="only consider refugees"
+        android:id="@+id/textView"
+        android:textSize="14sp"
+        android:layout_below="@+id/textView2"
+        android:layout_toEndOf="@+id/checkBox" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="at home from"
+        android:id="@+id/textView2"
+        android:layout_marginBottom="27dp"
+        android:textSize="16sp"
+        android:layout_above="@+id/checkBox"
+        android:layout_toStartOf="@+id/editText"
+        android:layout_marginEnd="23dp" />
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toEndOf="@+id/checkBox" />
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_alignBaseline="@+id/editText"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toEndOf="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=":"
+        android:id="@+id/textView3"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText3"
+        android:layout_alignTop="@+id/editText4"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <EditText
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:layout_alignTop="@+id/editText2"
+        android:layout_toEndOf="@+id/textView5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=":"
+        android:id="@+id/textView4"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_toEndOf="@+id/editText4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="to"
+        android:id="@+id/textView5"
+        android:textSize="16sp"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_toEndOf="@+id/orderButton" />
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">grocr</string>
-    <string name="login">Sign in</string>
+    <string name="app_name">Grocr</string>
+    <string name="login">Grocr</string>
     <string name="title_activity_product_browser">ProductBrowser</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_shopping_basket">Shopping Basket</string>
 </resources>
