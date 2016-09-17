@@ -8,6 +8,7 @@ import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -78,5 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        ImageView image = (ImageView) findViewById(R.id.imageView1);
+        image.setImageResource(R.drawable.grocr_logo);
     }
 }

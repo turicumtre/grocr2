@@ -44,7 +44,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Preis"
                 android:id="@+id/price1" />
-
         </TableRow>
 
     </TableLayout>
