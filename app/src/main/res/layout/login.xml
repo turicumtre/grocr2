@@ -9,7 +9,7 @@
     android:paddingTop="0sp"
     android:layout_margin="0sp"
     tools:context="com.example.patrick.grocr2.login">
-    <include layout="@layout/login_toolbar"
+    <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
     <TextView
