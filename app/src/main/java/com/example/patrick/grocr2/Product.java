@@ -19,14 +19,16 @@ public class Product {
     public String name;
     public String EAN;
     public double price;
+    public String itemGroup;
 
     Product(String EAN) {
+        this.EAN = EAN;
         final AsyncHttpClient client = new AsyncHttpClient();
         client.setBasicAuth("HackZurich","mKw%VY<7.Yb8D!G-");
 
-        final String storeID = "23303";
-        client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean="+EAN+"&format=json&retail_store_id="+storeID, new AsyncHttpResponseHandler() {
-
+        final String storeID = "18406";
+        //client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean="+EAN+"&format=json&retail_store_id="+storeID, new AsyncHttpResponseHandler() {
+        client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean=9002975301268&format=json&retail_store_id=18406", new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {}
 
@@ -38,10 +40,16 @@ public class Product {
                 JSONObject jsonobject = null;
                 try {
                     jsonobject = new JSONObject(res);
-                    String price = jsonobject.getJSONObject("pageInfo").getString("pageName");
-
+                    String priceString = jsonobject.getJSONObject("current_price").getString("price");
+                    Double price = Double.parseDouble(priceString);
+                    if(price!=null && price>0 && price<100)
+                    setPrice(price);
+                    String itemGroup = jsonobject.getString("item_group");
+                    setItemGroup(itemGroup);
+                    Log.i("fudi", "Price:" + price + "ItemGroup" + itemGroup);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.i("fudi", "JSON Error");
                 }
             }
 
@@ -53,5 +61,14 @@ public class Product {
             @Override
             public void onRetry(int retryNo) {}
         });
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+
+    public void setItemGroup(String itemGroup) {
+        this.itemGroup = itemGroup;
     }
 }

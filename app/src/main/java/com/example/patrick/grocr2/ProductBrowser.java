@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -42,5 +44,17 @@ public class ProductBrowser extends AppCompatActivity {
 
         for (String EAN : Arrays.asList(Product.example_EAN))
             products.add(new Product(EAN));
+
+
+
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.productTableLayout);
+
+        for (Product p:products){
+            TableRow row = new TableRow(this);
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            tableLayout.addView(row);
+        }
+
     }
 }
