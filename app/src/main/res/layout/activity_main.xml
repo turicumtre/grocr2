@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.patrick.grocr2.MainActivity"
-    >
+    android:background="@drawable/background2">
 
     <Button
         android:layout_width="wrap_content"
@@ -16,37 +16,63 @@
         android:text="logout"
         android:id="@+id/logoutButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignEnd="@+id/collect" />
 
     <Button
         android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:text="Collect"
+        android:layout_height="40dp"
+        android:text=" "
         android:id="@+id/collect"
-        android:padding="40dp"
-        android:layout_above="@+id/logoutButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="85dp"
+        android:padding="0dp"
         android:textSize="34dp"
-        android:background="@color/white"/>
+        android:background="@drawable/collector"
+        android:layout_marginBottom="28dp"
+        android:layout_above="@+id/logoutButton"
+        android:layout_alignStart="@+id/order" />
 
     <Button
         android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:text="Order"
+        android:layout_height="40dp"
+        android:text=" "
         android:id="@+id/order"
-        android:padding="40dp"
-        android:layout_above="@+id/collect"
-        android:layout_alignStart="@+id/collect"
-        android:layout_marginBottom="52dp"
+        android:padding="0dp"
         android:textSize="34dp"
-        android:background="@color/white"/>
+        android:background="@drawable/order"
+        android:layout_above="@+id/collect"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="33dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="shoppin basket"
         android:id="@+id/shoppingBasketButton"
-        android:layout_above="@+id/logoutButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/collect"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView1"
+        android:minHeight="230dp"
+        android:minWidth="230dp"
+        android:maxHeight="230dp"
+        android:maxWidth="230dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:nestedScrollingEnabled="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="grocr"
+        android:id="@+id/textView10"
+        android:textStyle="bold"
+        android:textSize="80dp"
+        android:layout_above="@+id/order"
+        android:layout_centerHorizontal="true"
+        android:textColor="#34AE94" />
 </RelativeLayout>

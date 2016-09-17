@@ -37,7 +37,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/price1" />
-
         </TableRow>
 
     </TableLayout>
