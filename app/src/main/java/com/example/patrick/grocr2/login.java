@@ -1,6 +1,7 @@
 package com.example.patrick.grocr2;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,41 +21,67 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class login extends AppCompatActivity {
 
-    EditText email;
     EditText password;
+    EditText email;
+    Button login;
+    ArrayList<account> profiles = new ArrayList<account>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        email = (EditText) findViewById(R.id.email);
+        login = (Button) findViewById(R.id.loginButton);
 
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                String getEmail = email.getText().toString();
-                String getPassword = password.getText().toString();
-
-                Log.i("email: ", getEmail);
-                Log.i("passw: ", getPassword);
-
-                /*tryLogin(getEmail, getPassword);*/
-
-                Intent myIntent = new Intent(login.this, MainActivity.class);
-                startActivity(myIntent);
+            public void onClick(View v) {
+                new Async().execute();
             }
         });
     }
 
 
-    protected void tryLogin (String email, String password)
+    class Async extends AsyncTask<Void, Integer, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            tryLogin();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            for (int i = 0; i < profiles.size(); i++){
+                if(email.getText().toString() == profiles.get(i).email && password.getText().toString() == profiles.get(i).password){
+
+                    String message = Integer.toString(profiles.get(i).id);
+
+                    Log.v("asdf",message);
+                    Intent intent = new Intent(login.this, MainActivity.class);
+                    intent.putExtra("message", message);
+                    startActivity(intent);
+                }
+
+            }
+        }
+    }
+
+    protected void tryLogin ()
     {
         HttpURLConnection connection;
         OutputStreamWriter request = null;
@@ -86,14 +117,35 @@ public class login extends AppCompatActivity {
             response = sb.toString();
             // You can perform UI operations here
             Log.i("response: ", response);
-            Toast.makeText(this,"Message from Server: \n"+ response, Toast.LENGTH_SHORT).show();
+
+
             isr.close();
             reader.close();
+
+            int cId,cScore;
+            String cFirst,cLast,cEmail,cPassword;
+            JSONArray array = new JSONArray(response);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject row = array.getJSONObject(i);
+                cFirst = row.getString("firstname");
+                cLast = row.getString("lastname");
+                cEmail = row.getString("email");
+                cScore = row.getInt("score");
+                cPassword = row.getString("password");
+                cId = row.getInt("id");
+
+                account currentAccount = new account(cFirst,cLast,cEmail,cPassword,cScore,cId);
+                profiles.add(currentAccount);
+            }
 
         }
         catch(IOException e)
         {
             // Error
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
+
 }
+
