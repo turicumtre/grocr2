@@ -29,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Bundle bundle = getIntent().getExtras();
+        String userId = bundle.getString("message");
+
+        if (userId == null) {
+            userId = "extra not set";
+        }
+
+        Log.v("id",userId);
+
         Button order = (Button) findViewById(R.id.order);
         order.setOnClickListener(new View.OnClickListener() {
             @Override
