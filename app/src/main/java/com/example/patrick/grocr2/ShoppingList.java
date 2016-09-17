@@ -52,7 +52,9 @@ import com.scandit.barcodepicker.ScanditLicense;
 import com.scandit.recognition.Barcode;
 import com.scandit.recognition.SymbologySettings;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 public class ShoppingList extends Activity implements OnScanListener {
 
@@ -193,7 +195,14 @@ public class ShoppingList extends Activity implements OnScanListener {
             }
             message += cleanData;
             message += "\n\n(" + code.getSymbologyName().toUpperCase(Locale.US) + ")";
-            //scannedEan.add(data);
+            scannedEan.add(data);
+
+            Set<String> hs = new HashSet<>();
+            hs.addAll(scannedEan);
+            scannedEan.clear();
+            scannedEan.addAll(hs);
+
+            Log.i("Potato",String.valueOf(scannedEan));
         }
         if (mToast != null) {
             mToast.cancel();
