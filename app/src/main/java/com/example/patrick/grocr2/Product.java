@@ -14,24 +14,27 @@ import cz.msebera.android.httpclient.Header;
  * Created by Patrick on 17.09.2016.
  */
 public class Product {
-    public final static String[] example_EAN = new String[] {"9002975301268", "7610469295645", "2050000719073","5937","2050000771606"};
+    public final static String[] example_EAN = new String[] {"9002975301268", "7610469295645", "2050000719073","5937","2050000771606","7640146943200","7614400005829","7640146944993", "7640146945020","76§0"};
 
     public String name;
+
     public String EAN;
     public double price;
     public String itemGroup;
+    int amount;
+    AsyncHttpClient client = new AsyncHttpClient();;
 
-    Product(String EAN) {
+    Product(String EAN)  {
         this.EAN = EAN;
-        final AsyncHttpClient client = new AsyncHttpClient();
-        client.setBasicAuth("HackZurich","mKw%VY<7.Yb8D!G-");
+    }
 
+    public void contactServer(){
+        client.setBasicAuth("HackZurich","mKw%VY<7.Yb8D!G-");
         final String storeID = "18406";
-        //client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean="+EAN+"&format=json&retail_store_id="+storeID, new AsyncHttpResponseHandler() {
-        client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean=9002975301268&format=json&retail_store_id=18406", new AsyncHttpResponseHandler() {
+        Log.i("fudi", "Request link: "+"https://backend.scango.ch/api/v01/items/find-by-ean/?ean="+EAN+"&format=json&retail_store_id="+storeID);
+        client.get("https://backend.scango.ch/api/v01/items/find-by-ean/?ean="+EAN+"&format=json&retail_store_id="+storeID, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {}
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("Fudi","Sucess " + responseBody.toString());
@@ -43,10 +46,12 @@ public class Product {
                     String priceString = jsonobject.getJSONObject("current_price").getString("price");
                     Double price = Double.parseDouble(priceString);
                     if(price!=null && price>0 && price<100)
-                    setPrice(price);
+                        setPrice(price);
                     String itemGroup = jsonobject.getString("item_group");
                     setItemGroup(itemGroup);
-                    Log.i("fudi", "Price:" + price + "ItemGroup" + itemGroup);
+                    String name = jsonobject.getString("name");
+                    setName(name);
+                    Log.i("fudi", "Name: " + name + " Price: " + price + " ItemGroup: " + itemGroup);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.i("fudi", "JSON Error");
@@ -63,12 +68,17 @@ public class Product {
         });
     }
 
+
     public void setPrice(double price) {
         this.price = price;
     }
 
-
     public void setItemGroup(String itemGroup) {
         this.itemGroup = itemGroup;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
