@@ -3,17 +3,16 @@ package com.example.patrick.grocr2;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.scandit.barcodepicker.BarcodePicker;
 import com.scandit.barcodepicker.OnScanListener;
 import com.scandit.barcodepicker.ScanSession;
@@ -34,22 +33,12 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
+
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 
-import com.scandit.barcodepicker.BarcodePicker;
-import com.scandit.barcodepicker.OnScanListener;
-import com.scandit.barcodepicker.ScanSession;
-import com.scandit.barcodepicker.ScanSettings;
-import com.scandit.barcodepicker.ScanditLicense;
-import com.scandit.recognition.Barcode;
+import android.view.WindowManager;
+
 import com.scandit.recognition.SymbologySettings;
 
 import java.util.HashSet;
@@ -60,6 +49,7 @@ public class ShoppingList extends Activity implements OnScanListener {
 
     ArrayList<Orders> orders = new ArrayList<Orders>();
     ArrayList<String> scannedEan = new ArrayList<>();
+    TableLayout tableLayout = (TableLayout) findViewById(R.id.glutz);
 
     // SCANDIT
     // The main object for recognizing a displaying barcodes.
@@ -412,5 +402,19 @@ public class ShoppingList extends Activity implements OnScanListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+    public void refreshTable() {
+        tableLayout.removeAllViews();
+            TableRow row = new TableRow(this);
+            TextView name = new TextView(this);
+            TextView price = new TextView(this);
+            name.setText("Rivella");
+            price.setText("5.50");
+            row.addView(name);
+            row.addView(price);
+            tableLayout.addView(row);
     }
 }
