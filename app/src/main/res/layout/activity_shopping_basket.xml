@@ -178,4 +178,15 @@
         android:textSize="16sp"
         android:layout_alignBottom="@+id/totalPrice"
         android:layout_toEndOf="@+id/totalPrice" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Shopping Basket"
+        android:id="@+id/textView11"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:textStyle="bold" />
 </RelativeLayout>
