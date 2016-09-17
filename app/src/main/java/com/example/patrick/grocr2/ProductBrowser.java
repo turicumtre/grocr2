@@ -44,7 +44,7 @@ public class ProductBrowser extends AppCompatActivity {
             products.add(new Product(EAN));
 
         //toolbar with back button
-        getSupportActionBar().setTitle(R.string.shopping_basket_title);
+        getSupportActionBar().setTitle(R.string.title_shopping_basket);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -14,9 +14,10 @@ public class shoppingBasket extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_basket);
 
+        //toolbar with back button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.shopping_basket_title);
+        getSupportActionBar().setTitle(R.string.title_shopping_basket);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -27,5 +28,7 @@ public class shoppingBasket extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+
     }
 }
