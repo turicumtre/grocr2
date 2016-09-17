@@ -157,7 +157,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             JSONArray array = new JSONArray(response);
 
-
             for (int i = 0; i < array.length(); i++) {
                 JSONObject row = array.getJSONObject(i);
 
