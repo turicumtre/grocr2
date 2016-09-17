@@ -32,7 +32,8 @@
         android:layout_below="@+id/signIn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="61dp"
-        android:backgroundTint="@color/colorPrimaryDark"/>
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="a" />
         android:layout_marginTop="61dp"
         android:text="a" />
 
@@ -46,7 +47,8 @@
         android:hint="Password"
         android:layout_below="@+id/email"
         android:layout_alignStart="@+id/email"
-        android:backgroundTint="@color/colorPrimaryDark"/>
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="a" />
         android:layout_alignStart="@+id/email"
         android:text="a" />
 

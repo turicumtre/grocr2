@@ -15,14 +15,14 @@
     <EditText
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:id="@+id/editText5"
+        android:id="@+id/searchbar"
         android:layout_alignParentTop="true"
          />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText5"
+        android:layout_below="@+id/searchbar"
         android:layout_alignParentStart="true"
         android:id="@+id/productTableLayout">
 
@@ -53,7 +53,7 @@
         android:layout_height="40dp"
         android:text="Go"
         android:id="@+id/searchb"
-        android:layout_toEndOf="@+id/editText5"
+        android:layout_toEndOf="@+id/searchbar"
         android:onClick="" />
 
 
