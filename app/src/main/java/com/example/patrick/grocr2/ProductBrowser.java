@@ -148,6 +148,7 @@ public class ProductBrowser extends AppCompatActivity {
 
     protected void tryPushToServer (String parameters)
     {
+        Log.v("POST",parameters);
         HttpURLConnection connection;
         OutputStreamWriter request = null;
 

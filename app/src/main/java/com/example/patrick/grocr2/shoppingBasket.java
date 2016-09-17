@@ -46,7 +46,7 @@ public class shoppingBasket extends AppCompatActivity {
 
         //get array of object items
 
-        JSONArray productsList = (JSONArray) findViewById(R.id.productsList);
+       /* JSONArray productsList = (JSONArray) findViewById(R.id.productsList);
 
         String name = "";
         Double price = 0.0;
@@ -83,6 +83,6 @@ public class shoppingBasket extends AppCompatActivity {
         listview.setAdapter(adapter);
 
         numOfItems.setText(num);
-        totalPrice.setText(String.valueOf(prices));
+        totalPrice.setText(String.valueOf(prices));*/
     }
 }

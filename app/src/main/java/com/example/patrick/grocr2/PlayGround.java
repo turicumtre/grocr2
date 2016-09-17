@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class PlayGround {
     Orders order = new Orders(1.,1.,"s",true,0,0,0,new ArrayList<Float>());
-    try {
+    /*try {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         ObjectOutputStream so = new ObjectOutputStream(bo);
         so.writeObject(myObject);
@@ -15,6 +15,6 @@ public class PlayGround {
         serializedObject = bo.toString();
     } catch (Exception e) {
         System.out.println(e);
-    }
+    }*/
 
 }

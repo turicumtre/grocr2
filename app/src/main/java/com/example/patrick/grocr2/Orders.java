@@ -39,7 +39,7 @@ public class Orders implements Serializable {
         result+= "longitude=" + longi + "&";
         result+= "latitude=" + lati + "&";
         result+= "deliverytime=" + deliverytime + "&";
-        result+= "refugeflag=" + (refugee?"1":"0");
+        result+= "refugeeflag=" + (refugee?"1":"0");
         Integer i = 1;
         for (Float prod_id : pk){
             result+=  "&pk"+ i.toString() + "=" + prod_id;
