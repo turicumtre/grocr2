@@ -39,8 +39,10 @@ public class Orders implements Serializable {
         result+= "refugeeflag=" + (refugee?"1":"0");
         Integer i = 1;
         for (Long prod_id : pk){
+            if (i>10)
+                continue;
             result+=  "&pk"+ i.toString() + "=" + prod_id;
-            i+=1;
+            i++;
         }
         result+= "&account=" + account;
         result+= "&length="+pk.size();

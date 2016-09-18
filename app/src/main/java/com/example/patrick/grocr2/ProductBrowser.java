@@ -1,10 +1,7 @@
 package com.example.patrick.grocr2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -82,10 +79,10 @@ public class ProductBrowser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createOrder();
+                globalApp.nameToProduct = nameToProduct;
                 Intent myIntent = new Intent(ProductBrowser.this, shoppingBasket.class);
                 startActivity(myIntent);
-                finish();
-            }
+                }
         });
 
     }
@@ -137,7 +134,7 @@ public class ProductBrowser extends AppCompatActivity {
         int id = 0;
         int account = 0;
         ArrayList<Long> pk = new ArrayList<>();
-        for (Product p : nameToProduct.values()) {
+        for (Product p : chosenProducts) {
             try {
                 if (p.EAN != null)
                     pk.add(Long.parseLong(p.EAN));
@@ -145,9 +142,9 @@ public class ProductBrowser extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        globalApp.currentOrderProducts = chosenProducts;
         globalApp.currentOrder = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk);
 
-    //new Async().execute();
     }
 
 

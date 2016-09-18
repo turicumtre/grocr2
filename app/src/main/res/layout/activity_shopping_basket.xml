@@ -116,14 +116,6 @@
         android:layout_alignBottom="@+id/textView3"
         android:layout_toEndOf="@+id/orderButton" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/orderList"
-        android:layout_marginBottom="220dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="58dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -193,4 +185,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
         android:textStyle="bold" />
+
 </RelativeLayout>
