@@ -11,9 +11,9 @@ public class Orders implements Serializable {
     boolean refugee;
     int accepted,id,account;
     //int posttime;
-    ArrayList<Float> pk = new ArrayList<>();
+    ArrayList<Long> pk = new ArrayList<>();
 
-    public Orders (double longi,double lati,String deliverytime, boolean refugee, int accepted, int id, int account,ArrayList<Float> pk)
+    public Orders (double longi,double lati,String deliverytime, boolean refugee, int accepted, int id, int account,ArrayList<Long> pk)
     {
         this.longi = longi;
         this.lati = lati;
@@ -38,7 +38,7 @@ public class Orders implements Serializable {
         result+= "deliverytime=" + deliverytime + "&";
         result+= "refugeeflag=" + (refugee?"1":"0");
         Integer i = 1;
-        for (Float prod_id : pk){
+        for (Long prod_id : pk){
             result+=  "&pk"+ i.toString() + "=" + prod_id;
             i+=1;
         }
