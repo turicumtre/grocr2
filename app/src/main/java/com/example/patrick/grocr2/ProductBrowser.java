@@ -60,8 +60,8 @@ public class ProductBrowser extends AppCompatActivity {
                 for (String productName : nameToProduct.keySet()){
                     if (productName.toLowerCase().contains(searchbar.getText().toString().toLowerCase()))
                         currentSearchResult.add(nameToProduct.get(productName));
-                    refreshTable();
-                }
+                    }
+                refreshTable();
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}

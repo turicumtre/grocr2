@@ -32,6 +32,7 @@ public class shoppingBasket extends AppCompatActivity {
     String parameters=null;
     int currentId = 0;
     Button orderButton;
+    TextView anfrageversendet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class shoppingBasket extends AppCompatActivity {
         TextView totalPrice = (TextView) findViewById(R.id.totalPrice);
         orderButton = (Button) findViewById(R.id.orderButton);
         TextView details = (TextView) findViewById(R.id.stuff);
+        anfrageversendet = (TextView) findViewById(R.id.anfrageversendet);
 
         globalApp = (App) getApplicationContext();
         Integer elements = 0;
@@ -67,14 +69,18 @@ public class shoppingBasket extends AppCompatActivity {
                 switch (button.getText().toString()){
                     case "Order":
                         sendOrderToServer();
-                        button.setText("Request sent!");
+                        button.setVisibility(View.INVISIBLE);
+                        anfrageversendet.setText("Request sent!");
+                        button.setText("");
                         button.setClickable(false);
                         new AsyncRead().execute();
 
                         break;
                     case "Confirm delivery":
                         new Async3().execute();
-                        button.setText("Thank you ;)");
+                        anfrageversendet.setText("Thank you");
+                        button.setText("");
+                        button.setVisibility(View.INVISIBLE);
                         button.setClickable(false);
 
                         new AsyncAccept().execute();
@@ -246,6 +252,7 @@ public class shoppingBasket extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Your order has been accepted", Toast.LENGTH_LONG).show();
             Log.v("yay", "yay");
             orderButton.setText("Confirm delivery");
+            orderButton.setVisibility(View.VISIBLE);
             orderButton.setClickable(true);
         }
     }

@@ -205,4 +205,16 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/anfrageversendet"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/orderButton"
+        android:layout_alignTop="@+id/orderButton"
+        android:textAlignment="center"
+        android:gravity="center_vertical" />
+
 </RelativeLayout>
