@@ -525,7 +525,7 @@ public class ShoppingList extends Activity implements OnScanListener {
             name.setTextAppearance(android.R.style.TextAppearance_Medium);
 
             name.setText(String.valueOf(correctOrder.pk.get(x)));
-            price.setText("  5.50");
+            price.setText("  5.50");//Todo
             row.addView(name);
             row.addView(price);
             tableLayout.addView(row);
