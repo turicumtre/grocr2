@@ -50,7 +50,6 @@ public class ProductBrowser extends AppCompatActivity {
     Set<Product> chosenProducts = new HashSet<>();
     Map<View, Product> viewToProduct = new HashMap<>();
     Button button;
-    Orders order;
     Map<String, Product> nameToProduct= new HashMap<>();
     int remaining=0;
 
@@ -156,7 +155,7 @@ public class ProductBrowser extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        order = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk);
+        Orders order = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk);
     new Async().execute();
     }
     class Async extends AsyncTask<Void, Integer, String>
