@@ -96,7 +96,7 @@ public class ProductBrowser extends AppCompatActivity {
         });
 
         Button checkoutButton = (Button) findViewById(R.id.checkoutButton);
-        checkoutButtonButton.setOnClickListener(new View.OnClickListener() {
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(ProductBrowser.this, shoppingBasket.class);
