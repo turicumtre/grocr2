@@ -68,7 +68,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-       String title = marker.getTitle();
+        String title = marker.getTitle();
         int tag = (int) marker.getTag();
 
         Intent intent = new Intent(MapsActivity.this, ShoppingList.class);
@@ -94,17 +94,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.onPostExecute(s);
 
 
-            for (int i = 0; i < orders.size(); i++){
+            for (int i = 0; i < orders.size(); i++) {
 
-                Log.v("pk",String.valueOf(orders.get(i).pk));
+                Log.v("pk", String.valueOf(orders.get(i).pk));
 
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(orders.get(i).longi,  orders.get(i).lati))
-                        .title(orders.get(i).pk.size() + " Products, delivery time: "+orders.get(i).deliverytime));
+                if (orders.get(i).accepted == 0) {
+                    Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(orders.get(i).longi, orders.get(i).lati))
+                            .title(orders.get(i).pk.size() + " Products, delivery time: " + orders.get(i).deliverytime));
 
-                marker.setTag(orders.get(i).id);
+                    marker.setTag(orders.get(i).id);
+                }
             }
-
         }
     }
 

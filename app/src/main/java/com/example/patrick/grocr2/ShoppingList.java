@@ -2,6 +2,7 @@ package com.example.patrick.grocr2;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -16,8 +17,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.scandit.barcodepicker.BarcodePicker;
 import com.scandit.barcodepicker.OnScanListener;
 import com.scandit.barcodepicker.ScanSession;
@@ -34,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -49,11 +50,7 @@ import com.scandit.recognition.SymbologySettings;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-
-import cz.msebera.android.httpclient.Header;
 
 public class ShoppingList extends Activity implements OnScanListener {
 
@@ -61,6 +58,8 @@ public class ShoppingList extends Activity implements OnScanListener {
     ArrayList<String> rowtoGrey = new ArrayList<>();
     ArrayList<String> scannedEan = new ArrayList<>();
     TableLayout tableLayout ;
+
+
 
     HashMap<Integer, Long> meMap;
     HashMap<Long, Integer> meMapSwitch;
@@ -77,7 +76,7 @@ public class ShoppingList extends Activity implements OnScanListener {
     public static final String sScanditSdkAppKey = "UW7JbTjpkUqEPJlAj9Fiv4TMAgFI+nyQQa5jNIaaNps";
     private boolean mPaused = true;
     Toast mToast = null;
-    int userId;
+    int orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +92,8 @@ public class ShoppingList extends Activity implements OnScanListener {
         tableLayout = (TableLayout) findViewById(R.id.glutz);
 
         Bundle bundle = getIntent().getExtras();
-        userId = bundle.getInt("message");
-        Toast.makeText(this, userId +" window clicked",
-                Toast.LENGTH_SHORT).show();
-
+        orderId = bundle.getInt("message");
+       
         new AsyncShopping().execute();
 
         ScanditLicense.setAppKey(sScanditSdkAppKey);
@@ -111,6 +108,14 @@ public class ShoppingList extends Activity implements OnScanListener {
             }
         });
 
+        Button acceptbtn = (Button) findViewById(R.id.button2);
+        acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Async().execute();
+                new AsyncRead().execute();
+            }
+        });
 
     }
 
@@ -490,7 +495,7 @@ public class ShoppingList extends Activity implements OnScanListener {
         Orders correctOrder = null;
 
         for (int i = 0; i < orders.size(); i++){
-            if (orders.get(i).id == userId){
+            if (orders.get(i).id == orderId){
                 correctOrder = orders.get(i);
             }
         }
@@ -513,7 +518,12 @@ public class ShoppingList extends Activity implements OnScanListener {
             TextView name = new TextView(this);
             TextView price = new TextView(this);
 
-            
+
+            price.setTextSize(TypedValue.COMPLEX_UNIT_SP , 24);
+            price.setTextAppearance(android.R.style.TextAppearance_Medium);
+            name.setTextSize(TypedValue.COMPLEX_UNIT_SP , 24);
+            name.setTextAppearance(android.R.style.TextAppearance_Medium);
+
             name.setText(String.valueOf(correctOrder.pk.get(x)));
             price.setText("  5.50");
             row.addView(name);
@@ -523,10 +533,6 @@ public class ShoppingList extends Activity implements OnScanListener {
 
         TextView deadline = (TextView) findViewById(R.id.deadline);
         TextView earnings = (TextView) findViewById(R.id.earnings);
-        deadline.setTextSize(TypedValue.COMPLEX_UNIT_SP , 20);
-        earnings.setTextSize(TypedValue.COMPLEX_UNIT_SP , 20);
-       // ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        //imageView.setImageResource(R.mipmap.ic_launcher);
 
         deadline.setText(correctOrder.deliverytime);
 
@@ -537,6 +543,231 @@ public class ShoppingList extends Activity implements OnScanListener {
 
  //
 //    }
+
+    //READ FROM SERVER
+    class AsyncRead extends AsyncTask<Void, Integer, String>
+    {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            Orders currOrder = null;
+
+
+
+            while (!checkIfAccepted()){
+                parseOrders();
+                Log.v("background","anotherone");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            Toast.makeText(getApplicationContext(), "Congratulations you have just earned "+"ENTER PERCENTAGE HERE", Toast.LENGTH_LONG).show();
+            Log.v("yay", "yay");
+
+        }
+    }
+
+
+    public boolean checkIfAccepted(){
+
+        Boolean toReturn = false;
+        HttpURLConnection connection;
+        OutputStreamWriter request = null;
+
+        URL url = null;
+        String response = null;
+
+        try
+        {
+            url = new URL("http://46.101.175.156/api/GET/orders.php");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(10000);
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+
+            request = new OutputStreamWriter(connection.getOutputStream());
+            request.flush();
+            request.close();
+            String line = "";
+            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null)
+            {
+                sb.append(line + "\n");
+            }
+            // Response from server after login process will be stored in response variable.
+            response = sb.toString();
+            // You can perform UI operations here
+            Log.i("responsea: ", response);
+
+
+            isr.close();
+            reader.close();
+
+            double clongi,clati;
+            String cdeliverytime;
+            int cposttime,caccepted,cid,caccount,crefugeeint;
+            boolean crefugee=false;
+            ArrayList<Long> cpk = new ArrayList<>();
+
+            JSONArray array = new JSONArray(response);
+
+
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject row = array.getJSONObject(i);
+
+                clongi = row.getDouble("longitude");
+                clati = row.getDouble("latitude");
+
+
+                cdeliverytime = row.getString("deliverytime");
+
+                crefugeeint = row.getInt("refugeeflag");
+                Log.i("longi", String.valueOf(clati));
+                //cposttime = row.getInt("posttime");
+
+                caccepted = row.getInt("accepted");
+                cid = row.getInt("id");
+                caccount = row.getInt("account");
+
+
+                //add all products
+                cpk.add(row.getLong("pk1"));
+                cpk.add(row.getLong("pk2"));
+                cpk.add(row.getLong("pk3"));
+                cpk.add(row.getLong("pk4"));
+                cpk.add(row.getLong("pk5"));
+                cpk.add(row.getLong("pk6"));
+                cpk.add(row.getLong("pk7"));
+                cpk.add(row.getLong("pk8"));
+                cpk.add(row.getLong("pk9"));
+                cpk.add(row.getLong("pk10"));
+
+
+                Log.v("Entire",String.valueOf(cpk));
+                //check if all products actually exist. If not delete from arraylist
+                for (int x = 9; x >= 0;x--){
+                    if (cpk.get(x)==0){
+                        cpk.remove(x);
+                    }
+                }
+
+                if (crefugeeint >0){
+                    crefugee = true;
+                }
+
+                ArrayList<Long> dummy = new ArrayList<>();
+                dummy = (ArrayList<Long>)cpk.clone();
+
+                if (cid == orderId && caccepted == 1){
+                    Log.v("DONE","DONE");
+                    toReturn = true;
+                }
+
+            }
+
+        }
+        catch(IOException e)
+        {
+            // Error
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
+    }
+
+    //WRITE TO SERVER
+    class Async extends AsyncTask<Void, Integer, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            tryPushToServer();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+        }
+    }
+
+
+    protected void tryPushToServer ()
+    {
+
+        App globalApp = (App) getApplicationContext();
+
+        String parameters = "personid="+globalApp.id+"&orderid="+ orderId;
+        Log.v("POST",parameters);
+        HttpURLConnection connection;
+        OutputStreamWriter request = null;
+
+        URL url = null;
+        String response = null;
+
+        try
+        {
+            url = new URL("http://46.101.175.156/api/INSERT/account.php");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(10000);
+            connection.setDoOutput(true);
+            connection.setRequestMethod("POST");
+
+            request = new OutputStreamWriter(connection.getOutputStream());
+            request.write(parameters);
+            request.flush();
+            request.close();
+            String line = "";
+            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null)
+            {
+                sb.append(line + "\n");
+            }
+            // Response from server after login process will be stored in response variable.
+            response = sb.toString();
+            // You can perform UI operations here
+            Log.i("response: ", response);
+
+
+            isr.close();
+            reader.close();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 }
