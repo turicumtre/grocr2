@@ -46,9 +46,6 @@ public class login extends AppCompatActivity {
                 new Async().execute();
             }
         });
-
-        App globalApp = (App) getApplicationContext();
-
     }
 
 

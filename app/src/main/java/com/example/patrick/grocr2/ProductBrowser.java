@@ -145,12 +145,12 @@ public class ProductBrowser extends AppCompatActivity {
         int accepted = 0;
         int id = 0;
         int account = 0;
-        ArrayList<Float> pk = new ArrayList<>();
+        ArrayList<Long> pk = new ArrayList<>();
         for (Product p : nameToProduct.values()) {
             Log.i("fudi", "parse int: " + p.EAN);
             try {
                 if (p.EAN != null)
-                    pk.add(Float.parseFloat(p.EAN));
+                    pk.add(Long.parseLong(p.EAN));
             } catch (Exception e) {
                 e.printStackTrace();
             }
