@@ -3,9 +3,11 @@ package com.example.patrick.grocr2;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -14,6 +16,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.scandit.barcodepicker.BarcodePicker;
 import com.scandit.barcodepicker.OnScanListener;
 import com.scandit.barcodepicker.ScanSession;
@@ -42,15 +46,24 @@ import android.view.WindowManager;
 
 import com.scandit.recognition.SymbologySettings;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+
+import cz.msebera.android.httpclient.Header;
 
 public class ShoppingList extends Activity implements OnScanListener {
 
     ArrayList<Orders> orders = new ArrayList<Orders>();
+    ArrayList<String> rowtoGrey = new ArrayList<>();
     ArrayList<String> scannedEan = new ArrayList<>();
-    TableLayout tableLayout = (TableLayout) findViewById(R.id.glutz);
+    TableLayout tableLayout ;
+
+    HashMap<Integer, Long> meMap;
+    HashMap<Long, Integer> meMapSwitch;
 
     // SCANDIT
     // The main object for recognizing a displaying barcodes.
@@ -64,27 +77,29 @@ public class ShoppingList extends Activity implements OnScanListener {
     public static final String sScanditSdkAppKey = "UW7JbTjpkUqEPJlAj9Fiv4TMAgFI+nyQQa5jNIaaNps";
     private boolean mPaused = true;
     Toast mToast = null;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        meMap = new HashMap<Integer, Long>();
+        meMapSwitch = new HashMap<Long, Integer>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         scanner = (RelativeLayout) findViewById(R.id.scannview);
         scanner.setVisibility(View.GONE);
         scanner.setTranslationZ(10);
 
+        tableLayout = (TableLayout) findViewById(R.id.glutz);
+
         Bundle bundle = getIntent().getExtras();
-        int userId = bundle.getInt("message");
+        userId = bundle.getInt("message");
         Toast.makeText(this, userId +" window clicked",
                 Toast.LENGTH_SHORT).show();
 
         new AsyncShopping().execute();
 
         ScanditLicense.setAppKey(sScanditSdkAppKey);
-
-        // Initialize and start the bar code recognition.
-        //initializeAndStartBarcodeScanning();
-
 
         Button scan =(Button) findViewById(R.id.button);
         scan.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +208,66 @@ public class ShoppingList extends Activity implements OnScanListener {
             scannedEan.clear();
             scannedEan.addAll(hs);
 
-            Log.i("Potato",String.valueOf(scannedEan));
+
+
+
+            for(int i = 0, j = tableLayout.getChildCount(); i < j; i++) {
+                final View view = tableLayout.getChildAt(i);
+                if (view instanceof TableRow) {
+                    // then, you can remove the the row you want...
+                    // for instance...
+                    TableRow row = (TableRow) view;
+
+                    //get pk from tag of row
+                    Integer rowtag = (Integer) row.getTag();
+                    Long pkgfromRow = meMap.get(rowtag);
+
+                    //Log.i("memapvals", String.valueOf(meMap.values()));
+
+                  /*  Log.w("Potato",String.valueOf(scannedEan));
+                    Log.w("Potato","length "+String.valueOf(scannedEan.size()));
+
+                    for (int a = 0; a < 1; a++){
+                        Log.w("Potato","yeshh");
+                        if (scannedEan.get(a).equals("7640146941626")){
+                            Log.w("yep","done");
+                        }
+
+                    }*/
+
+
+                    /*
+                    if( scannedEan.contains("7640146941626") ) {
+                        /*Log.i("Success","yess");
+
+                        int tag = (int) row.getTag();
+                        int togrey = meMapSwitch.get(pkgfromRow);
+
+                        Log.v("tag"," row "+tag+" togrey "+ togrey);*/
+                        //if (tag == togrey) {
+                        /*Log.v("scannerd", String.valueOf(pkgfromRow));
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    view.setBackgroundColor(Color.LTGRAY);
+                                }
+                            });
+                        }
+                    }
+*/
+                    /*Integer rowtag = (int) row.getTag();
+                    Float pkgfromRow = meMap.get(rowtag);
+                    // float pkfromRow = (Float) meMap.get(row.getTag());
+
+                    Log.i("pkfromRow", String.valueOf(pkgfromRow));
+                    Log.i("memapvals", String.valueOf(meMap.values()));
+
+                    if( meMap.values().contains(pkgfromRow) ) {
+                        view.setBackgroundColor(Color.LTGRAY);
+                    }*/
+                }
+            }
+
         }
         if (mToast != null) {
             mToast.cancel();
@@ -297,7 +371,9 @@ public class ShoppingList extends Activity implements OnScanListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            //POPULATE TABLE HERE (?)
+            Log.i("done","post");
+            refreshTable();
+
         }
     }
 
@@ -331,7 +407,7 @@ public class ShoppingList extends Activity implements OnScanListener {
             // Response from server after login process will be stored in response variable.
             response = sb.toString();
             // You can perform UI operations here
-            Log.i("response: ", response);
+            Log.i("responsea: ", response);
 
 
             isr.close();
@@ -341,7 +417,7 @@ public class ShoppingList extends Activity implements OnScanListener {
             String cdeliverytime;
             int cposttime,caccepted,cid,caccount,crefugeeint;
             boolean crefugee=false;
-            ArrayList<Integer> cpk = new ArrayList<>();
+            ArrayList<Long> cpk = new ArrayList<>();
 
             JSONArray array = new JSONArray(response);
 
@@ -365,16 +441,16 @@ public class ShoppingList extends Activity implements OnScanListener {
 
 
                 //add all products
-                cpk.add(row.getInt("pk1"));
-                cpk.add(row.getInt("pk2"));
-                cpk.add(row.getInt("pk3"));
-                cpk.add(row.getInt("pk4"));
-                cpk.add(row.getInt("pk5"));
-                cpk.add(row.getInt("pk6"));
-                cpk.add(row.getInt("pk7"));
-                cpk.add(row.getInt("pk8"));
-                cpk.add(row.getInt("pk9"));
-                cpk.add(row.getInt("pk10"));
+                cpk.add(row.getLong("pk1"));
+                cpk.add(row.getLong("pk2"));
+                cpk.add(row.getLong("pk3"));
+                cpk.add(row.getLong("pk4"));
+                cpk.add(row.getLong("pk5"));
+                cpk.add(row.getLong("pk6"));
+                cpk.add(row.getLong("pk7"));
+                cpk.add(row.getLong("pk8"));
+                cpk.add(row.getLong("pk9"));
+                cpk.add(row.getLong("pk10"));
 
 
                 Log.v("Entire",String.valueOf(cpk));
@@ -389,8 +465,8 @@ public class ShoppingList extends Activity implements OnScanListener {
                     crefugee = true;
                 }
 
-                ArrayList<Float> dummy = new ArrayList<>();
-                dummy = (ArrayList<Float>)cpk.clone();
+                ArrayList<Long> dummy = new ArrayList<>();
+                dummy = (ArrayList<Long>)cpk.clone();
                 Orders currentOrder = new Orders(clongi,clati,cdeliverytime,crefugee,caccepted,cid,caccount,dummy);
                 orders.add(currentOrder);
                 cpk.clear();
@@ -409,13 +485,59 @@ public class ShoppingList extends Activity implements OnScanListener {
 
     public void refreshTable() {
         tableLayout.removeAllViews();
+
+        //Get all packages
+        Orders correctOrder = null;
+
+        for (int i = 0; i < orders.size(); i++){
+            if (orders.get(i).id == userId){
+                correctOrder = orders.get(i);
+            }
+        }
+
+        for (int x = 0; x < correctOrder.pk.size(); x++){
+
+            meMap.put( x,correctOrder.pk.get(x));
+            meMapSwitch.put(correctOrder.pk.get(x),x);
+
             TableRow row = new TableRow(this);
+            row.setTag(x);
+
+            row.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+
+                    view.setBackgroundColor(Color.LTGRAY);
+                }
+            });
+
             TextView name = new TextView(this);
             TextView price = new TextView(this);
-            name.setText("Rivella");
-            price.setText("5.50");
+
+            
+            name.setText(String.valueOf(correctOrder.pk.get(x)));
+            price.setText("  5.50");
             row.addView(name);
             row.addView(price);
             tableLayout.addView(row);
+        }
+
+        TextView deadline = (TextView) findViewById(R.id.deadline);
+        TextView earnings = (TextView) findViewById(R.id.earnings);
+        deadline.setTextSize(TypedValue.COMPLEX_UNIT_SP , 20);
+        earnings.setTextSize(TypedValue.COMPLEX_UNIT_SP , 20);
+       // ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        //imageView.setImageResource(R.mipmap.ic_launcher);
+
+        deadline.setText(correctOrder.deliverytime);
+
+        Log.v("Hashmap", String.valueOf(meMap));
+        Log.v("HashmapSwitch", String.valueOf(meMapSwitch));
     }
+
+
+    public void setNameAndPrice(String){
+
+    }
+
+
 }
