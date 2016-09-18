@@ -2,6 +2,9 @@ package com.example.patrick.grocr2;
 
 import android.app.Application;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -9,6 +12,9 @@ import java.util.Set;
  */
 public class App extends Application {
     Orders currentOrder=null;
-    Set<Product> currentOrderProducts = null;
+    Set<Product> currentOrderProducts = new HashSet<>();
     String id;
+    Map<String, Product> nameToProduct= new HashMap<>();
+    Map<String,Product> EANToProduct = new HashMap<>();
+
 }
