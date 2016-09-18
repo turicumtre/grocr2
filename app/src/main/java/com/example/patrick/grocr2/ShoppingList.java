@@ -59,7 +59,8 @@ public class ShoppingList extends Activity implements OnScanListener {
     ArrayList<String> scannedEan = new ArrayList<>();
     TableLayout tableLayout ;
 
-
+    int totalworth = 0;
+    int percentage = 0;
 
     HashMap<Integer, Long> meMap;
     HashMap<Long, Integer> meMapSwitch;
@@ -505,6 +506,16 @@ public class ShoppingList extends Activity implements OnScanListener {
             meMap.put( x,correctOrder.pk.get(x));
             meMapSwitch.put(correctOrder.pk.get(x),x);
 
+            String  ean = String.valueOf(correctOrder.pk.get(x));
+            App globalApp = (App) getApplicationContext();
+
+            Product currentProduct = globalApp.EANToProduct.get(ean);
+            String nameString = currentProduct.name;
+            String priceString = String.valueOf(currentProduct.price)+" CHF";
+
+            totalworth += currentProduct.price;
+
+            Log.v("worth",String.valueOf(totalworth));
             TableRow row = new TableRow(this);
             row.setTag(x);
 
@@ -524,8 +535,8 @@ public class ShoppingList extends Activity implements OnScanListener {
             name.setTextSize(TypedValue.COMPLEX_UNIT_SP , 24);
             name.setTextAppearance(android.R.style.TextAppearance_Medium);
 
-            name.setText(String.valueOf(correctOrder.pk.get(x)));
-            price.setText("  5.50");//Todo
+            name.setText(nameString);
+            price.setText(priceString);
             row.addView(name);
             row.addView(price);
             tableLayout.addView(row);
@@ -534,6 +545,15 @@ public class ShoppingList extends Activity implements OnScanListener {
         TextView deadline = (TextView) findViewById(R.id.deadline);
         TextView earnings = (TextView) findViewById(R.id.earnings);
 
+        int cashInt = totalworth / 10;
+
+        if (cashInt == 0){
+            cashInt = 1;
+        }
+
+        percentage = cashInt;
+        String cash = String.valueOf(cashInt);
+        earnings.setText(cash+" CHF");
         deadline.setText(correctOrder.deliverytime);
 
         Log.v("Hashmap", String.valueOf(meMap));
@@ -575,7 +595,7 @@ public class ShoppingList extends Activity implements OnScanListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Toast.makeText(getApplicationContext(), "Congratulations you have just earned "+"ENTER PERCENTAGE HERE", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Congratulations you have just earned "+percentage + " CHF", Toast.LENGTH_LONG).show();
             Log.v("yay", "yay");
 
         }
