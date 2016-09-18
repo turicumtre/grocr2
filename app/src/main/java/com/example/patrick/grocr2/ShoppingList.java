@@ -513,6 +513,7 @@ public class ShoppingList extends Activity implements OnScanListener {
             TextView name = new TextView(this);
             TextView price = new TextView(this);
 
+            
             name.setText(String.valueOf(correctOrder.pk.get(x)));
             price.setText("  5.50");
             row.addView(name);
@@ -538,5 +539,5 @@ public class ShoppingList extends Activity implements OnScanListener {
 
     }
 
-   
+
 }
