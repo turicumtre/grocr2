@@ -52,7 +52,8 @@
         android:textSize="80dp"
         android:textColor="#34AE94"
         android:layout_above="@+id/collect"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
     <Button
         android:layout_width="230dp"

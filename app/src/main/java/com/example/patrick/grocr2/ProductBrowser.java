@@ -71,6 +71,16 @@ public class ProductBrowser extends AppCompatActivity {
         }
 
         tableLayout = (TableLayout) findViewById(R.id.productTableLayout);
+
+        Button checkoutButton = (Button) findViewById(R.id.checkoutButton);
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(ProductBrowser.this, shoppingBasket.class);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     public void refreshTable() {
