@@ -41,19 +41,24 @@ public class shoppingBasket extends AppCompatActivity {
         TextView numOfItems = (TextView) findViewById(R.id.numOfItems);
         TextView totalPrice = (TextView) findViewById(R.id.totalPrice);
         orderButton = (Button) findViewById(R.id.orderButton);
+        TextView details = (TextView) findViewById(R.id.stuff);
 
         globalApp = (App) getApplicationContext();
         Integer elements = 0;
         Double sum=0.;
 
+        String s="";
         if(globalApp.currentOrderProducts!=null&&globalApp.currentOrderProducts!=null){
             for (Product p: globalApp.currentOrderProducts){
                 elements++;
                 sum+=p.price;
+                s+= p.name+"\n";
             }
         }
+        sum = Math.round(100*sum)/100.;
         totalPrice.setText(sum.toString());
         numOfItems.setText(elements.toString());
+        details.setText(s);
 
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override

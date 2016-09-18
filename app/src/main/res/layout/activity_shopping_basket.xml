@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:text="Order"
         android:id="@+id/orderButton"
+        android:layout_marginBottom="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp" />
+        android:layout_centerHorizontal="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -133,8 +133,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=" "
         android:id="@+id/numOfItems"
+        android:textSize="25dp"
+        android:textAlignment="center"
         android:layout_alignBottom="@+id/textView6"
-        android:layout_alignEnd="@+id/checkBox" />
+        android:layout_alignEnd="@+id/checkBox"
+        android:layout_alignStart="@+id/textView11" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -143,8 +146,8 @@
         android:text="Items"
         android:id="@+id/textView7"
         android:textSize="16sp"
-        android:layout_above="@+id/editText"
-        android:layout_toEndOf="@+id/numOfItems" />
+        android:layout_alignBottom="@+id/numOfItems"
+        android:layout_alignEnd="@+id/editText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -153,8 +156,8 @@
         android:text="Fr."
         android:id="@+id/textView8"
         android:textSize="16sp"
-        android:layout_above="@+id/editText2"
-        android:layout_toStartOf="@+id/editText3" />
+        android:layout_alignBottom="@+id/totalPrice"
+        android:layout_toStartOf="@+id/totalPrice" />
 
     <TextView
         android:layout_width="50dp"
@@ -163,7 +166,10 @@
         android:text=" "
         android:id="@+id/totalPrice"
         android:layout_above="@+id/editText3"
-        android:layout_toEndOf="@+id/textView8" />
+        android:layout_alignEnd="@+id/editText3"
+        android:textSize="25dp"
+        android:layout_toEndOf="@+id/textView"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -184,6 +190,19 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/stuff"
+        android:layout_below="@+id/textView11"
+        android:layout_marginTop="19dp"
+        android:layout_above="@+id/totalPrice"
+        android:textAlignment="center"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

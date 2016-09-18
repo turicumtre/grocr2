@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -47,6 +48,7 @@ import android.view.WindowManager;
 
 import com.scandit.recognition.SymbologySettings;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -59,8 +61,8 @@ public class ShoppingList extends Activity implements OnScanListener {
     ArrayList<String> scannedEan = new ArrayList<>();
     TableLayout tableLayout ;
 
-    int totalworth = 0;
-    int percentage = 0;
+    double totalworth = 0;
+    double percentage = 10.;
 
     HashMap<Integer, Long> meMap;
     HashMap<Long, Integer> meMapSwitch;
@@ -91,6 +93,12 @@ public class ShoppingList extends Activity implements OnScanListener {
         scanner.setTranslationZ(10);
 
         tableLayout = (TableLayout) findViewById(R.id.glutz);
+
+        EditText hour = (EditText)findViewById(R.id.editText3);
+        EditText min = (EditText)findViewById(R.id.editText4);
+        Calendar c = Calendar.getInstance();
+        hour.setText(c.get(Calendar.HOUR_OF_DAY)+2);
+        min.setText("00");
 
         Bundle bundle = getIntent().getExtras();
         orderId = bundle.getInt("message");
@@ -545,11 +553,9 @@ public class ShoppingList extends Activity implements OnScanListener {
         TextView deadline = (TextView) findViewById(R.id.deadline);
         TextView earnings = (TextView) findViewById(R.id.earnings);
 
-        int cashInt = totalworth / 10;
+        double cashInt = totalworth*percentage/100.;
 
-        if (cashInt == 0){
-            cashInt = 1;
-        }
+        cashInt = Math.min(cashInt,2.);
 
         percentage = cashInt;
         String cash = String.valueOf(cashInt);
