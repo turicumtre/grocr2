@@ -38,6 +38,7 @@ public class ProductBrowser extends AppCompatActivity {
     Set<Product> chosenProducts = new HashSet<>();
     Map<View, Product> viewToProduct = new HashMap<>();
     Map<String, Product> nameToProduct= new HashMap<>();
+    EditText searchbar;
     int remaining=0;
     App globalApp;
 
@@ -46,7 +47,7 @@ public class ProductBrowser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_browser);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        final EditText searchbar = (EditText) findViewById(R.id.searchbar);
+        searchbar = (EditText) findViewById(R.id.searchbar);
 
         globalApp = (App) getApplicationContext();
         nameToProduct = globalApp.nameToProduct;

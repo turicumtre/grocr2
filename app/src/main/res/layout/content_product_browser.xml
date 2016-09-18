@@ -14,10 +14,10 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:id="@+id/searchbar"
         android:layout_alignParentTop="true"
-         />
+        android:layout_toStartOf="@+id/checkoutButton" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -35,14 +35,13 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Produkt"
-                android:id="@+id/product1" />
+                android:id="@+id/product1"
+                android:background="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Preis"
                 android:id="@+id/price1" />
         </TableRow>
 
@@ -51,9 +50,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Checkout"
+        android:text="Done"
         android:id="@+id/checkoutButton"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/productTableLayout"
         android:layout_alignParentEnd="true" />
 
 
