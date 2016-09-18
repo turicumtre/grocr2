@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -367,7 +368,20 @@ public class shoppingBasket extends AppCompatActivity {
             offset2=-offset2;
         double longi = 47.3802+offset1;
         double lati = 8.5404+offset2;
-        String deliverytime = "16:30";
+        EditText minutes = (EditText)findViewById(R.id.editText3) ;
+        EditText hours = (EditText)findViewById(R.id.editText4) ;
+
+        String min = minutes.getText().toString();
+        String hour = hours.getText().toString();
+
+        if (min.matches("")) {
+            min = "30";
+        }
+        if (hour.matches("")) {
+            hour = "16";
+        }
+
+        String deliverytime = hour+" : "+ min;
         boolean refugee = true;
         int accepted = 0;
         int id = 0;
