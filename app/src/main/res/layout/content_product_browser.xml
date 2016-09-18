@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_product_browser">
 
     <EditText
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:id="@+id/searchbar"
         android:layout_alignParentTop="true"
@@ -32,7 +32,7 @@
             android:id="@+id/row1">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Produkt"
@@ -47,14 +47,6 @@
         </TableRow>
 
     </TableLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="Go"
-        android:id="@+id/searchb"
-        android:layout_toEndOf="@+id/searchbar"
-        android:onClick="" />
 
     <Button
         android:layout_width="wrap_content"
