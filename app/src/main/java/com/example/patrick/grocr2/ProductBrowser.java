@@ -174,7 +174,7 @@ public class ProductBrowser extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("DU STINKSCH","NACH SCHEISSE");
+            Log.i("de päddy stinkt","NACH SCHEISSE");
         }
     }
 

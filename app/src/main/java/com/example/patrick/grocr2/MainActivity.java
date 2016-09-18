@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 
 import cz.msebera.android.httpclient.Header;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,6 +83,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageView image = (ImageView) findViewById(R.id.imageView1);
-        image.setImageResource(R.drawable.grocr_logo);
+        image.setImageResource(R.drawable.rounded_corners);
     }
 }
