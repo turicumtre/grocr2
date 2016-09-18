@@ -1,6 +1,7 @@
 package com.example.patrick.grocr2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -93,6 +94,16 @@ public class ProductBrowser extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
+
+        Button checkoutButton = (Button) findViewById(R.id.checkoutButton);
+        checkoutButtonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(ProductBrowser.this, shoppingBasket.class);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     public void refreshTable() {
