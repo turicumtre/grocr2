@@ -535,9 +535,8 @@ public class ShoppingList extends Activity implements OnScanListener {
     }
 
 
-    public void setNameAndPrice(String){
-
-    }
+ //
+//    }
 
 
 }

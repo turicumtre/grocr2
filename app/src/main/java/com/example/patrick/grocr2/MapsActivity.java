@@ -195,8 +195,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     crefugee = true;
                 }
 
-                ArrayList<Float> dummy = new ArrayList<>();
-                dummy = (ArrayList<Float>)cpk.clone();
+                ArrayList<Long> dummy = new ArrayList<>();
+                dummy = (ArrayList<Long>)cpk.clone();
                 Orders currentOrder = new Orders(clongi,clati,cdeliverytime,crefugee,caccepted,cid,caccount,dummy);
                 orders.add(currentOrder);
                 cpk.clear();

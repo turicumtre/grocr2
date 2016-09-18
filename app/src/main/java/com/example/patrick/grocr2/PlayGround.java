@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PlayGround {
 
     public static void main(String[] args) {
-        Orders order = new Orders(1.,1.,"s",true,0,0,0,new ArrayList<Float>());
+        Orders order = new Orders(1.,1.,"s",true,0,0,0,new ArrayList<Long>());
 
         String serializedObject = "";
 
