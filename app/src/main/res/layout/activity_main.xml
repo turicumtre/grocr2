@@ -11,14 +11,16 @@
     android:background="@drawable/background2">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+        android:layout_width="1px"
+        android:layout_height="1px"
         android:text="logout"
         android:id="@+id/logoutButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView1" />
+        android:layout_below="@+id/imageView1" />
 
     <Button
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="shoppin basket"
@@ -64,9 +66,11 @@
         android:maxWidth="350dp"
         android:text=" "
         android:id="@+id/order"
+        android:paddingBottom="32dp"
         android:layout_above="@+id/logoutButton"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/order"/>
+        android:background="@drawable/order"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:layout_width="230dp"
