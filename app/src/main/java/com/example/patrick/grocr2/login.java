@@ -48,7 +48,6 @@ public class login extends AppCompatActivity {
         });
 
         App globalApp = (App) getApplicationContext();
-        globalApp.test++;
 
     }
 
