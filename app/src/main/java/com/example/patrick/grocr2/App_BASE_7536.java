@@ -10,5 +10,4 @@ import java.util.Set;
 public class App extends Application {
     Orders currentOrder=null;
     Set<Product> currentOrderProducts = null;
-    String id;
 }

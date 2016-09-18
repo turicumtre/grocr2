@@ -69,6 +69,9 @@ public class login extends AppCompatActivity {
             Log.v("started","IT HAS BEGUN");
             for (int i = 0; i < profiles.size(); i++){
 
+
+
+
                 Log.v("started","1:"+email.getText().toString()+" 2."+profiles.get(i).email);
                 Log.v("started","1:"+password.getText().toString()+" 2."+profiles.get(i).password);
 
@@ -78,8 +81,12 @@ public class login extends AppCompatActivity {
                 String iteratorPwd = profiles.get(i).password.toString();
                 if(currentEmail.equals(iteratorEmail) && currentPwd.equals(iteratorPwd)  ){
 
+
                     String message = Integer.toString(profiles.get(i).id);
 
+
+                    App globalApp = (App) getApplicationContext();
+                    globalApp.id = Integer.toString(profiles.get(i).id);
 
                     Intent intent = new Intent(login.this, MainActivity.class);
                     intent.putExtra("message", message);

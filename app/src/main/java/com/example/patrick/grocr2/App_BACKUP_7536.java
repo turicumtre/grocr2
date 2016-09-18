@@ -2,6 +2,8 @@ package com.example.patrick.grocr2;
 
 import android.app.Application;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,5 +12,10 @@ import java.util.Set;
 public class App extends Application {
     Orders currentOrder=null;
     Set<Product> currentOrderProducts = null;
+<<<<<<< HEAD
+    Map<String, Product> nameToProduct;
+    int id;
+=======
     String id;
+>>>>>>> 940ada3ae32a52d0399f2b49bdaf71391ec232bb
 }
