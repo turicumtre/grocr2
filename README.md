@@ -5,7 +5,5 @@ Or two guys who want to watch a Football game but not have any beer, so they ope
 
 Here are some Screenshots, keep in mind though that it was a Hackathon project so don't expect anything fancy:
 
-| ![Main](https://raw.githubusercontent.com/Hadjimina/grocr2/master/main.png)  | ![Map](https://raw.githubusercontent.com/Hadjimina/grocr2/master/map.png) | 
-![Products](https://raw.githubusercontent.com/Hadjimina/grocr2/master/products.png)
+| ![Main](https://raw.githubusercontent.com/Hadjimina/grocr2/master/main.png)  | ![Map](https://raw.githubusercontent.com/Hadjimina/grocr2/master/map.png) | ![Products](https://raw.githubusercontent.com/Hadjimina/grocr2/master/products.png)
 |:---:|:---:|:---:|
-
