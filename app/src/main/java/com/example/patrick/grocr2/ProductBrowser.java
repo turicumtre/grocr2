@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -15,87 +15,91 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import cz.msebera.android.httpclient.Header;
-
 public class ProductBrowser extends AppCompatActivity {
-    String[] example_EAN;
     TableLayout tableLayout;
     Set<Product> currentSearchResult = new HashSet<>();
     Set<Product> chosenProducts = new HashSet<>();
     Map<View, Product> viewToProduct = new HashMap<>();
-    Map<String, Product> nameToProduct= new HashMap<>();
     EditText searchbar;
-    int remaining=0;
     App globalApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_browser);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         searchbar = (EditText) findViewById(R.id.searchbar);
 
         globalApp = (App) getApplicationContext();
-        nameToProduct = globalApp.nameToProduct;
-        setSupportActionBar(toolbar);
         tableLayout = (TableLayout) findViewById(R.id.productTableLayout);
+        searchbar.setHint("Looking for something in particular?");
+
+
+        Button checkoutButton = (Button) findViewById(R.id.checkoutButton);
+        checkoutButton.setBackgroundColor(Color.rgb(52,174,148));
+        checkoutButton.setTextColor(Color.WHITE);
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createOrder();
+                Intent myIntent = new Intent(ProductBrowser.this, shoppingBasket.class);
+                startActivity(myIntent);
+            }
+        });
 
         searchbar.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable s) {
-                currentSearchResult = new HashSet<Product>();
-                for (String productName : nameToProduct.keySet()){
-                    if (productName.toLowerCase().contains(searchbar.getText().toString().toLowerCase()))
-                        currentSearchResult.add(nameToProduct.get(productName));
+                String searchString = searchbar.getText().toString().toLowerCase();
+                if(searchString.length()>=2){
+                    currentSearchResult = new HashSet<>();
+                    for (Product p : globalApp.allProducts){
+                        if (p.name.toLowerCase().contains(searchString))
+                            currentSearchResult.add(p);
                     }
-                refreshTable();
+                    refreshTable();
+                }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
 
-        Button checkoutButton = (Button) findViewById(R.id.checkoutButton);
-        checkoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createOrder();
-                globalApp.nameToProduct = nameToProduct;
-                Intent myIntent = new Intent(ProductBrowser.this, shoppingBasket.class);
-                startActivity(myIntent);
-                }
-        });
 
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        currentSearchResult = new HashSet<>();
+        currentSearchResult.addAll(globalApp.initialProducts);
+        chosenProducts = new HashSet<>();
+        refreshTable();
+    }
+
 
     public void refreshTable() {
         tableLayout.removeAllViews();
         for (Product p:currentSearchResult){
             TableRow row = new TableRow(this);
-            Button name = new Button(this);
-            TextView price = new TextView(this);
-            name.setText(p.name);
-            price.setText("  Fr. " + Double.toString(p.price));
+            TextView name = new TextView(this);
+            //TextView price = new TextView(this);
+            String priceString = " (Fr. " + Double.toString(p.price)+")";
+            name.setText(p.name+priceString);
+            name.setMinimumHeight(90);
+            name.setMinWidth(1000);
+            //price.setText();
             row.addView(name);
-            row.addView(price);
+            // row.addView(price);
             tableLayout.addView(row);
             viewToProduct.put(name, p);
             if(chosenProducts.contains(viewToProduct.get(name)))
-                name.setBackgroundColor(Color.LTGRAY);
+                row.setBackgroundColor(Color.LTGRAY);
             else
-                name.setBackgroundColor(Color.WHITE);
+                row.setBackgroundColor(Color.WHITE);
             name.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v)
                 {
@@ -135,8 +139,6 @@ public class ProductBrowser extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        globalApp.currentOrderProducts = chosenProducts;
-        globalApp.currentOrder = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk);
-
+        globalApp.currentOrder = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk, chosenProducts);
     }
 }

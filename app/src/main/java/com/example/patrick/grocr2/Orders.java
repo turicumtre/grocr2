@@ -4,16 +4,20 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Orders implements Serializable {
     double longi,lati;
     String deliverytime;
     boolean refugee;
     int accepted,id,account;
-    //int posttime;
+    double totalvalue=0;
+    //int posttime;9
     ArrayList<Long> pk = new ArrayList<>();
+    Set<Product> products = new HashSet<>();
 
-    public Orders (double longi,double lati,String deliverytime, boolean refugee, int accepted, int id, int account,ArrayList<Long> pk)
+    public Orders (double longi,double lati,String deliverytime, boolean refugee, int accepted, int id, int account,ArrayList<Long> pk, Set<Product> products)
     {
         this.longi = longi;
         this.lati = lati;
@@ -24,8 +28,17 @@ public class Orders implements Serializable {
         this.id = id;
         this.account = account;
         this.pk = pk;
-
+        this.products = products;
+        computeTotalValue();
     }
+
+    private void computeTotalValue() {
+        double sum=0;
+        for(Product p : products)
+            sum+=p.price*p.amount;
+        totalvalue=sum;
+    }
+
     public String  getData(){
         String asdf ="longitude "+longi+" latitide "+ lati+" deliverytime "+deliverytime;
         return asdf;

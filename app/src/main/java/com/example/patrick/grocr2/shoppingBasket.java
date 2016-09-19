@@ -1,38 +1,21 @@
 package com.example.patrick.grocr2;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class shoppingBasket extends AppCompatActivity {
     App globalApp;
     String parameters=null;
-    int currentId = 0;
-    Button orderButton;
-    TextView anfrageversendet;
+    TextView oderButtonNew;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +24,24 @@ public class shoppingBasket extends AppCompatActivity {
 
         TextView numOfItems = (TextView) findViewById(R.id.numOfItems);
         TextView totalPrice = (TextView) findViewById(R.id.totalPrice);
-        orderButton = (Button) findViewById(R.id.orderButton);
+        oderButtonNew = (TextView) findViewById(R.id.anfrageversendet);
+        oderButtonNew.setText("Order");
+        oderButtonNew.setBackgroundColor(Color.rgb(52,174,148));
+        oderButtonNew.setTextColor(Color.WHITE);
         TextView details = (TextView) findViewById(R.id.stuff);
-        anfrageversendet = (TextView) findViewById(R.id.anfrageversendet);
 
         globalApp = (App) getApplicationContext();
         Integer elements = 0;
         Double sum=0.;
 
+        EditText minutes = (EditText)findViewById(R.id.editText3) ;
+        EditText hours = (EditText)findViewById(R.id.editText4) ;
+        minutes.setText("30");
+        hours.setText("16");
+
         String s="";
-        if(globalApp.currentOrderProducts!=null&&globalApp.currentOrderProducts!=null){
-            for (Product p: globalApp.currentOrderProducts){
+        if(globalApp.currentOrder!=null){
+            for (Product p: globalApp.currentOrder.products){
                 elements++;
                 sum+=p.price;
                 s+= p.name+"\n";
@@ -62,314 +52,29 @@ public class shoppingBasket extends AppCompatActivity {
         numOfItems.setText(elements.toString());
         details.setText(s);
 
-        orderButton.setOnClickListener(new View.OnClickListener() {
+        oderButtonNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Button button = (Button)view;
-                switch (button.getText().toString()){
-                    case "Order":
-                        sendOrderToServer();
-                        button.setVisibility(View.INVISIBLE);
-                        anfrageversendet.setText("Request sent!");
-                        button.setText("");
-                        button.setClickable(false);
-                        new AsyncRead().execute();
+                sendOrderToServer();
+                globalApp.currentOrder=null;
+                Intent intent = new Intent(shoppingBasket.this, ThankYou.class);
+                startActivity(intent);
+                oderButtonNew.setClickable(false);
 
-                        break;
-                    case "Confirm delivery":
-                        new Async3().execute();
-                        anfrageversendet.setText("Thank you");
-                        button.setText("");
-                        button.setVisibility(View.INVISIBLE);
-                        button.setClickable(false);
 
-                        new AsyncAccept().execute();
-                        break;
-
-                }
             }
         });
-
       }
 
-    class AsyncAccept extends AsyncTask<Void, Integer, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            tryPushToServer();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (globalApp.currentOrder==null) {
+            oderButtonNew.setText("Thank you for your order");
+            oderButtonNew.setBackgroundColor(Color.rgb(250,250,250));
+            oderButtonNew.setTextColor(Color.rgb(52,174,148));
         }
     }
-
-
-    protected void tryPushToServer ()
-    {
-
-        App globalApp = (App) getApplicationContext();
-
-        String parameters = "id="+currentId;
-        Log.v("POST",parameters);
-        HttpURLConnection connection;
-        OutputStreamWriter request = null;
-
-        URL url = null;
-        String response = null;
-
-        try
-        {
-            url = new URL("http://46.101.175.156/api/INSERT/accepted.php");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(15000);
-            connection.setReadTimeout(10000);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-
-            request = new OutputStreamWriter(connection.getOutputStream());
-            request.write(parameters);
-            request.flush();
-            request.close();
-            String line = "";
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            // Response from server after login process will be stored in response variable.
-            response = sb.toString();
-            // You can perform UI operations here
-            Log.i("response: ", response);
-
-
-            isr.close();
-            reader.close();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    protected void tryPushToServer (String parameters)
-    {
-        HttpURLConnection connection;
-        OutputStreamWriter request = null;
-
-        URL url = null;
-        String response = null;
-
-        try
-        {
-            url = new URL("http://46.101.175.156/api/INSERT/orders.php");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(15000);
-            connection.setReadTimeout(10000);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-
-            request = new OutputStreamWriter(connection.getOutputStream());
-            request.write(parameters);
-            request.flush();
-            request.close();
-            String line = "";
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            // Response from server after login process will be stored in response variable.
-            response = sb.toString();
-            // You can perform UI operations here
-            Log.i("response: ", response);
-
-
-            if( isNumeric(response.trim())){
-                 currentId = Integer.parseInt(response.trim());
-            }
-
-            isr.close();
-            reader.close();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    //READ FROM SERVER
-    class AsyncRead extends AsyncTask<Void, Integer, String>
-    {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            Orders currOrder = null;
-
-
-
-            while (!checkIfAccountNotNull()){
-               // parseOrders();
-                Log.v("background","anotherone");
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Toast.makeText(getApplicationContext(), "Your order has been accepted", Toast.LENGTH_LONG).show();
-            Log.v("yay", "yay");
-            orderButton.setText("Confirm delivery");
-            orderButton.setVisibility(View.VISIBLE);
-            orderButton.setClickable(true);
-        }
-    }
-
-
-
-    public boolean checkIfAccountNotNull(){
-
-        Boolean toReturn = false;
-        HttpURLConnection connection;
-        OutputStreamWriter request = null;
-
-        URL url = null;
-        String response = null;
-
-        try
-        {
-            url = new URL("http://46.101.175.156/api/GET/orders.php");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(15000);
-            connection.setReadTimeout(10000);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-
-            request = new OutputStreamWriter(connection.getOutputStream());
-            request.flush();
-            request.close();
-            String line = "";
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            // Response from server after login process will be stored in response variable.
-            response = sb.toString();
-            // You can perform UI operations here
-            Log.i("responsea: ", response);
-
-
-            isr.close();
-            reader.close();
-
-            double clongi,clati;
-            String cdeliverytime;
-            int cposttime,caccepted,cid,caccount,crefugeeint;
-            boolean crefugee=false;
-            ArrayList<Long> cpk = new ArrayList<>();
-
-            JSONArray array = new JSONArray(response);
-
-
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject row = array.getJSONObject(i);
-
-                clongi = row.getDouble("longitude");
-                clati = row.getDouble("latitude");
-
-
-                cdeliverytime = row.getString("deliverytime");
-
-                crefugeeint = row.getInt("refugeeflag");
-                Log.i("longi", String.valueOf(clati));
-                //cposttime = row.getInt("posttime");
-
-                caccepted = row.getInt("accepted");
-                cid = row.getInt("id");
-                caccount = row.getInt("account");
-
-
-                //add all products
-                cpk.add(row.getLong("pk1"));
-                cpk.add(row.getLong("pk2"));
-                cpk.add(row.getLong("pk3"));
-                cpk.add(row.getLong("pk4"));
-                cpk.add(row.getLong("pk5"));
-                cpk.add(row.getLong("pk6"));
-                cpk.add(row.getLong("pk7"));
-                cpk.add(row.getLong("pk8"));
-                cpk.add(row.getLong("pk9"));
-                cpk.add(row.getLong("pk10"));
-
-
-                Log.v("Entire",String.valueOf(cpk));
-                //check if all products actually exist. If not delete from arraylist
-                for (int x = 9; x >= 0;x--){
-                    if (cpk.get(x)==0){
-                        cpk.remove(x);
-                    }
-                }
-
-                if (crefugeeint >0){
-                    crefugee = true;
-                }
-
-                ArrayList<Long> dummy = new ArrayList<>();
-                dummy = (ArrayList<Long>)cpk.clone();
-
-                if (cid == currentId && caccount != 0){
-                    Log.v("DONE","DONE");
-                    toReturn = true;
-                }
-
-            }
-
-        }
-        catch(IOException e)
-        {
-            // Error
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return toReturn;
-    }
-
 
     public void sendOrderToServer() {
         double offset1 = Math.random()/100;
@@ -399,7 +104,7 @@ public class shoppingBasket extends AppCompatActivity {
         int id = 0;
         int account = 0;
         ArrayList<Long> pk = new ArrayList<>();
-        for (Product p : globalApp.currentOrderProducts) {
+        for (Product p : globalApp.currentOrder.products) {
             try {
                 if (p.EAN != null)
                     pk.add(Long.parseLong(p.EAN));
@@ -407,134 +112,8 @@ public class shoppingBasket extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        Orders order = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk);
+        Orders order = new Orders(longi, lati, deliverytime, refugee, accepted, id, account, pk, globalApp.currentOrder.products);
         parameters = order.getPostStringForServer();
-        new Async().execute();
-    }
-
-    class Async extends AsyncTask<Void, Integer, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            tryPushToServer(parameters);
-            return null;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
-
-
-    class Async2 extends AsyncTask<Void, Integer, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
-        }
-    }
-
-    class Async3 extends AsyncTask<Void, Integer, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            confirmDelivery();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
-        }
-    }
-
-    protected void confirmDelivery ()
-    {
-
-        App globalApp = (App) getApplicationContext();
-
-        String parameters = "personid="+globalApp.id+"&orderid="+globalApp.currentOrder.id;
-        Log.v("POST",parameters);
-        HttpURLConnection connection;
-        OutputStreamWriter request = null;
-
-        URL url = null;
-        String response = null;
-
-        try
-        {
-            url = new URL("http://46.101.175.156/api/INSERT/account.php");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(15000);
-            connection.setReadTimeout(10000);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-
-            request = new OutputStreamWriter(connection.getOutputStream());
-            request.write(parameters);
-            request.flush();
-            request.close();
-            String line = "";
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            // Response from server after login process will be stored in response variable.
-            response = sb.toString();
-            // You can perform UI operations here
-            Log.i("response: ", response);
-
-
-            isr.close();
-            reader.close();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public static boolean isNumeric(String str)
-    {
-        try
-        {
-            double d = Double.parseDouble(str);
-        }
-        catch(NumberFormatException nfe)
-        {
-            return false;
-        }
-        return true;
+        globalApp.ordersList.add(order);
     }
 }

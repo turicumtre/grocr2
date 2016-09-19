@@ -17,43 +17,58 @@
         android:layout_height="50dp"
         android:id="@+id/searchbar"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/checkoutButton" />
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchbar"
-        android:layout_alignParentStart="true"
-        android:id="@+id/productTableLayout">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/row1">
-
-            <Button
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/product1"
-                android:background="#FFFFFF" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/price1" />
-        </TableRow>
-
-    </TableLayout>
+        android:layout_toStartOf="@+id/checkoutButton"
+        android:layout_alignEnd="@+id/checkoutButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Done"
+        android:text="Continue to Checkout"
         android:id="@+id/checkoutButton"
-        android:layout_above="@+id/productTableLayout"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/scrollView" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/checkoutButton"
+        android:layout_below="@+id/searchbar">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchbar"
+            android:layout_alignParentStart="true"
+            android:id="@+id/productTableLayout">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/row1">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/product1"
+                    android:background="#FFFFFF"
+                    android:maxWidth="30dp"
+                    android:minWidth="30dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/price1" />
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

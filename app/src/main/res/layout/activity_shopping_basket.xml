@@ -8,9 +8,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order"
+        android:text=""
         android:id="@+id/orderButton"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="0dp"
+        android:clickable="false"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -18,11 +20,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="64dp"
+        android:text=" "
         android:layout_above="@+id/orderButton"
-        android:layout_toStartOf="@+id/orderButton"
-        android:text=" " />
+        android:layout_toStartOf="@+id/textView"
+        android:layout_alignParentStart="false"
+        android:allowUndo="false"
+        android:checked="false"
+        android:foregroundGravity="right"
+        android:gravity="top|right" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,7 +38,7 @@
         android:id="@+id/textView"
         android:textSize="14sp"
         android:layout_below="@+id/textView2"
-        android:layout_toEndOf="@+id/checkBox" />
+        android:layout_alignStart="@+id/orderButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -117,27 +123,15 @@
         android:layout_toEndOf="@+id/orderButton" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Total: "
-        android:id="@+id/textView6"
-        android:layout_above="@+id/editText"
-        android:layout_alignStart="@+id/textView2"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="30dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=" "
         android:id="@+id/numOfItems"
         android:textSize="25dp"
         android:textAlignment="center"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignEnd="@+id/checkBox"
-        android:layout_alignStart="@+id/textView11" />
+        android:layout_above="@+id/editText"
+        android:layout_alignStart="@+id/textView2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -146,8 +140,8 @@
         android:text="Items"
         android:id="@+id/textView7"
         android:textSize="16sp"
-        android:layout_alignBottom="@+id/numOfItems"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_above="@+id/editText"
+        android:layout_alignEnd="@+id/textView2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -175,16 +169,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=".-"
-        android:id="@+id/textView9"
-        android:textSize="16sp"
-        android:layout_alignBottom="@+id/totalPrice"
-        android:layout_toEndOf="@+id/totalPrice" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Shopping Basket"
         android:id="@+id/textView11"
         android:layout_alignParentTop="true"
@@ -200,7 +184,6 @@
         android:id="@+id/stuff"
         android:layout_below="@+id/textView11"
         android:layout_marginTop="19dp"
-        android:layout_above="@+id/totalPrice"
         android:textAlignment="center"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
@@ -208,13 +191,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/anfrageversendet"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="25dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/orderButton"
-        android:layout_alignTop="@+id/orderButton"
-        android:textAlignment="center"
-        android:gravity="center_vertical" />
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=" "
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/editText" />
 
 </RelativeLayout>
